@@ -3,15 +3,15 @@ Perfect! Now I see the issue - you're accessing via the EC2 public hostname, but
 🚀 Add EC2 Public Hostname to Trusted Domains
 bash
 # Add the EC2 public hostname to trusted domains
-kubectl exec -n nextcloud -it deploy/nextcloud -- \
+kubectl exec -n nextcloud -it deploy/next-cloud-nextcloud -- \
   php occ config:system:set trusted_domains 2 --value="ec2-13-218-232-56.compute-1.amazonaws.com"
 
 # Also add the public IP if needed
-kubectl exec -n nextcloud -it deploy/nextcloud -- \
+kubectl exec -n nextcloud -it deploy/next-cloud-nextcloud -- \
   php occ config:system:set trusted_domains 3 --value="13.218.232.56"
 
 # Verify all trusted domains
-kubectl exec -n nextcloud -it deploy/nextcloud -- \
+kubectl exec -n nextcloud -it deploy/next-cloud-nextcloud -- \
   php occ config:system:get trusted_domains
 Expected output:
 
@@ -57,7 +57,7 @@ Public IP	13.218.232.56
 Run this single command to add both hostname and IP:
 
 bash
-kubectl exec -n nextcloud -it deploy/nextcloud -- bash -c "\
+kubectl exec -n nextcloud -it deploy/next-cloud-nextcloud -- bash -c "\
   php occ config:system:set trusted_domains 2 --value='ec2-13-218-232-56.compute-1.amazonaws.com' && \
   php occ config:system:set trusted_domains 3 --value='13.218.232.56' && \
   php occ config:system:get trusted_domains"
