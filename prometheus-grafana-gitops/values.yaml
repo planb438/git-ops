@@ -1,0 +1,13 @@
+# Values for "kube-prometheus-stack" subchart
+kube-prometheus-stack:
+  prometheus:
+    enabled: true
+    service:
+      type: NodePort
+      nodePort: 32000
+  grafana:
+    enabled: true
+    service:
+      type: NodePort
+      nodePort: 32001
+

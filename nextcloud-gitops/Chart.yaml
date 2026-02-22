@@ -1,0 +1,7 @@
+apiVersion: v2
+name: nextcloud-gitops
+version: 1.0.0
+dependencies:
+  - name: nextcloud
+    version: "8.4.1"
+    repository: "https://nextcloud.github.io/helm/"

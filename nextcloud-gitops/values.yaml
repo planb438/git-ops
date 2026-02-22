@@ -1,0 +1,26 @@
+  # Your values.yaml should target the "nextcloud" subchart
+nextcloud:  # ← This is the subchart name
+  host: 10.0.1.244    # Replace with your worker node IP or domain - # Internal IP of any worker node
+  username: admin    # Default admin user
+  password: "Adm!nP@ss123"  # Change this to a strong password!
+  service:
+    type: NodePort
+    nodePorts:
+      http: 31000
+  replicaCount: 1  # ← Inside nextcloud: section
+  persistence:
+    enabled: true
+    size: 10Gi
+  ingress:
+    enabled: false
+  
+  # REDUCED ephemeral-storage values
+  resources:
+    requests:
+      memory: 512Mi
+      cpu: 500m
+      ephemeral-storage: "1Gi"    # Reduced from 1Gi
+    limits:
+      memory: 1Gi
+      cpu: 1000m
+      ephemeral-storage: "2Gi"     # Reduced from 2Gi

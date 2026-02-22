@@ -1,0 +1,83 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: erpnext
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"  # Run after storage is ready
+spec:
+  project: default
+  source:
+    repoURL: https://frappe.github.io/helm
+    chart: erpnext
+    targetRevision: 8.0.21  # Latest stable as of Feb 2026 [citation:2]
+    helm:
+      values: |
+        # Use your existing local-path storage class
+        persistence:
+          worker:
+            storageClass: "local-path"
+            size: 10Gi
+            accessMode: ReadWriteOnce  # Force RWO
+          logs:
+            storageClass: "local-path"
+            size: 2Gi
+            accessMode: ReadWriteOnce  # Force RWO
+        
+        # Site configuration
+        createSite:
+          enabled: true
+          siteName: "erpnext.local"  # Change to your domain
+        
+        # Image settings
+        image:
+          repository: frappe/erpnext
+          tag: v16.4.1  # Latest stable ERPNext [citation:2]
+          pullPolicy: IfNotPresent
+        
+        # Ingress for access (NodePort alternative)
+        ingress:
+          enabled: false  # Set to true if you have ingress controller
+        
+        # Service type - NodePort for easy access
+        service:
+          nginx:
+            type: NodePort
+            nodePort: 32000  # Pick a port in 30000-32767 range
+        
+        # Resource limits - adjust based on your node capacity
+        resources:
+          gunicorn:
+            requests:
+              memory: 512Mi
+              cpu: 500m
+              ephemeral-storage: "1Gi"  # Conservative for your disk space
+            limits:
+              memory: 1Gi
+              cpu: 1000m
+              ephemeral-storage: "2Gi"
+        
+        # Scale down for your environment
+        replicaCount: 1
+        
+        # External database (optional - if you want to use your own)
+        # mariadbHost: "your-mariadb-service"
+        # mariadbPort: 3306
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: erpnext
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+      - CreateNamespace=true
+      - PruneLast=true
+      - ApplyOutOfSyncOnly=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
