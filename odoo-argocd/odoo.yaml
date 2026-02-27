@@ -4,7 +4,7 @@ metadata:
   name: odoo
   namespace: odoo
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: odoo
