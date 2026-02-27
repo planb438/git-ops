@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/git-ops/odoo-argocd.git
+    repoURL: https://github.com/planb438/git-ops.git
     targetRevision: HEAD
-    path: .
+    path: odoo-argocd
   destination:
     server: https://kubernetes.default.svc
     namespace: odoo

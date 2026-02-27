@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: snipeit
+  name: dolibarr
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/planb438/git-ops.git
     targetRevision: HEAD
-    path: snipeit-argocd
+    path: dolibarr
   destination:
     server: https://kubernetes.default.svc
-    namespace: snipeit
+    namespace: dolibarr
   syncPolicy:
     automated:
       prune: true
