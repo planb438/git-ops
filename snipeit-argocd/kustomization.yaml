@@ -1,0 +1,6 @@
+resources:
+- namespace.yaml
+- mysql.yaml
+- snipeit.yaml
+- service.yaml
+- secret.yaml
