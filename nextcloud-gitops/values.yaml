@@ -23,8 +23,3 @@ nextcloud:  # ← This is the subchart name
     limits:
       memory: 1Gi
       cpu: 1000m
-<<<<<<< HEAD
-      ephemeral-storage: "4Gi"     # Reduced from 2Gi
-=======
-      ephemeral-storage: "3Gi"     # Reduced from 2Gi
->>>>>>> 36cdd2c (updated ephemeral-storage)
