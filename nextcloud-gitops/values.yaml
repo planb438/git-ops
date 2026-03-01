@@ -19,8 +19,8 @@ nextcloud:  # ← This is the subchart name
     requests:
       memory: 512Mi
       cpu: 500m
-      ephemeral-storage: "2Gi"    # Reduced from 1Gi
+      ephemeral-storage: "1Gi"    # Reduced from 1Gi
     limits:
       memory: 1Gi
       cpu: 1000m
-      ephemeral-storage: "3Gi"    # Reduced from 2Gi
+      ephemeral-storage: "2Gi"    # Reduced from 2Gi
